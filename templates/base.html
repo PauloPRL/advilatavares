@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n future staticfiles %}
+<head>
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+    <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+    {% ifinstalled mezzanine.blog %}
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+        <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+    {% endifinstalled %}
+
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "less/bootstrap/bootstrap.less" %}" type="text/less">
+        <link rel="stylesheet" href="{% static "less/main/style.less" %}" type="text/less">
+        {% if LANGUAGE_BIDI %}
+            <link rel="stylesheet" href="{% static "css/rtl.css" %}">
+        {% endif %}
+        {% ifinstalled cartridge.shop %}
+            <link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+            {% if LANGUAGE_BIDI %}
+                <link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+            {% endif %}
+        {% endifinstalled %}
+        {% block extra_css %}{% endblock %}
+    {% endcompress %}
+
+    {% compress js %}
+        <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+        <script src="{% static "js/bootstrap.js" %}"></script>
+        <script src="{% static "js/bootstrap-extras.js" %}"></script>
+        {% block extra_js %}{% endblock %}
+    {% endcompress %}
+    <!--[if lt IE 9]>
+        <script src="{% static "js/html5shiv.js" %}"></script>
+    <![endif]-->
+
+    {% block extra_head %}{% endblock %}
+
+</head>
+<body id="{% block body_id %}body{% endblock %}">
+
+    {% block header %}
+        <header id="header-top">
+            <div class="container" id="header-logo-container">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <a id="logo-link" href="{% url "home" %}">
+                            <img src="{% static "img/logo.png" %}" alt="ADVT"/>
+                        </a>
+                    </div>
+                    <div id="header-info" class="span9 hidden-phone">
+                        <h1>{{ settings.SITE_TITLE }}</h1>
+                        <p>Rua: São Caetano, 127 - Vila Tavares - Mauá - SP - Tel.:3421-5024</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        {% page_menu "pages/menus/dropdown.html" %}
+                    </div>
+                </div>
+            </div>
+
+            {% block extra_header %}{% endblock %}
+        </header>
+    {% endblock %}
+
+    {% block top_container %}
+        <div class="container">
+
+            {% nevercache %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" data-alert="alert">
+                        <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
+                    </div>
+                {% endfor %}
+            {% endnevercache %}
+
+
+            <h1>{% block title %}{% endblock %}</h1>
+
+            {% block breadcrumb %}
+                <ul class="breadcrumb">
+                    {% spaceless %}
+                        {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+                    {% endspaceless %}
+                </ul>
+            {% endblock %}
+
+        </div>
+    {% endblock %}
+
+    {% block main_container %}
+        <div class="container">
+            {% block main %}{% endblock %}
+        </div>
+    {% endblock %}
+
+    <footer>
+        <div class="container">
+            Rua: São Caetano, 127 - Vila Tavares - Mauá - SP - Tel.:3421-5024
+        </div>
+    </footer>
+
+    {% include "includes/footer_scripts.html" %}
+
+</body>
+</html>

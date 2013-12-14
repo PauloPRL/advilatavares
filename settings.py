@@ -1,4 +1,3 @@
-
 ######################
 # MEZZANINE SETTINGS #
 ######################
@@ -105,7 +104,7 @@ USE_TZ = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "pt-BR"
 
 # A boolean that turns on/off debug mode. When set to ``True``, stack traces
 # are displayed for error pages. Should always be set to ``False`` in
@@ -119,7 +118,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = False
+USE_I18N = True
 
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "c1b8de23-7c3b-4e4f-a612-c21ffb32d16be7b79a64-27a7-42b1-8900-b250f79e38ed7c0a7d91-d587-4b75-a7b1-d9547d009439"
@@ -240,7 +239,7 @@ INSTALLED_APPS = (
     "mezzanine.forms",
     "mezzanine.pages",
     "mezzanine.galleries",
-    "mezzanine.twitter",
+    #"mezzanine.twitter",
     #"mezzanine.accounts",
     #"mezzanine.mobile",
 )
@@ -327,6 +326,14 @@ DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
 #     "NEVERCACHE_KEY": NEVERCACHE_KEY,
 # }
 
+# Allowed Hosts
+ALLOWED_HOSTS = ('localhost',)
+
+COMPRESS_ENABLED = True
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
 
 ##################
 # LOCAL SETTINGS #
@@ -340,6 +347,9 @@ try:
 except ImportError:
     pass
 
+# Recompile on load page
+if DEBUG:
+    COMPRESS_REBUILD_TIMEOUT = 5
 
 ####################
 # DYNAMIC SETTINGS #
