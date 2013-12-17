@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load pages_tags mezzanine_tags i18n future staticfiles %}
+{% load pages_tags mezzanine_tags i18n future staticfiles linked_content %}
 <head>
 
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -103,6 +103,22 @@
             {% block main %}{% endblock %}
         </div>
     {% endblock %}
+
+    <section id="bluebar">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span4">
+                    {% linked_content bluecontent1 %}
+                </div>
+                <div class="span4">
+                    {% linked_content bluecontent2 %}
+                </div>
+                <div class="span4">
+                    {% linked_content bluecontent3 %}
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="container">
