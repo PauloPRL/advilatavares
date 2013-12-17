@@ -14,11 +14,11 @@ class LinkedContent(models.Model):
 
     @property
     def title(self):
-        return self.title or self.page.title
+        return self._title or self.page.title
 
     @property
     def description(self):
-        return self.description or self.page.description
+        return self._description or self.page.description
 
     class Meta:
         verbose_name='Conteúdos linkável'
