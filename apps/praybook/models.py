@@ -53,8 +53,8 @@ class UserIntercessor(models.Model):
     status = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name='Intercessor'
-        verbose_name_plural='Intercessores'
+        verbose_name = 'Intercessor'
+        verbose_name_plural = 'Intercessores'
 
     def __unicode__(self):
         return self.name + ', ' + self.email
