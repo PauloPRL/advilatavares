@@ -15,7 +15,16 @@ class PrayBook(Page):
         verbose_name = "Livro de Oração"
         verbose_name_plural = "Livros de Orações"
 
-    pass
+
+class Intercessor(Page):
+    """
+    Default page, created only for link PrayBookEntry
+    """
+    text = RichTextField(verbose_name="Texto")
+
+    class Meta:
+        verbose_name = "Intercessor"
+        verbose_name_plural = "Intercessores"
 
 
 class PrayBookEntry(models.Model):
@@ -31,3 +40,21 @@ class PrayBookEntry(models.Model):
 
     def __unicode__(self):
         return self.name + ': ' + self.cause[0:150]
+
+
+class UserIntercessor(models.Model):
+    """
+    An intercessor for pray entries
+    """
+    name = models.CharField(max_length=100, verbose_name='Nome')
+    email = models.EmailField(verbose_name='E-mail')
+    received_entries = models.ManyToManyField(PrayBookEntry, verbose_name='Pedidos Recebidos')
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name='Intercessor'
+        verbose_name_plural='Intercessores'
+
+    def __unicode__(self):
+        return self.name + ', ' + self.email

@@ -1,0 +1,28 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags i18n staticfiles %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "less/praybook/style.less" %}" type="text/less"/>
+{% endblock %}
+
+{% block main %}
+    {% if created %}
+        {% editable page.intercessor.text %}
+            <div id="intercessor-page">
+                {{ page.intercessor.text|safe }}
+            </div>
+        {% endeditable %}
+
+        <a class="btn" href="javascript:history.back()">Voltar</a>
+
+    {% else %}
+        <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} id="intercessor-form" class="form-horizontal">
+            {% csrf_token %}
+            {%  fields_for form %}
+
+            <div class="form-actions">
+                <input class="btn btn-inverse" type="submit" value="Salvar">
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}
