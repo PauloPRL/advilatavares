@@ -1,0 +1,9 @@
+{% load mezzanine_tags %}
+
+<section class="linked_content">
+    {% editable content._title %}<h4>{{ content.title }}</h4>{% endeditable %}
+    {% editable content._description %}<p>{{ content.description|safe }}</p>{% endeditable %}
+    {% editable content.button content.page %}
+        <a href="{{ content.page.get_absolute_url }}" class="btn">{{ content.button }}</a>
+    {% endeditable %}
+</section>

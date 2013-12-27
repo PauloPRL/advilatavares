@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import Http404
 from mezzanine.pages.page_processors import processor_for
-from .models import PrayBook, PrayBookEntry, Intercessor, UserIntercessor
+from .models import PrayBook, PrayBookEntry, Intercessor
 from .forms import PrayBookForm, IntercessorForm
 
 

@@ -1,0 +1,66 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags i18n staticfiles %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "less/testimonial/style.less" %}" type="text/less"/>
+{% endblock %}
+
+{% block main %}
+    <div class="row-fluid">
+        <div class="span6">
+
+
+            <section id="testimonial-entries">
+                {% for entry in entries %}
+                    {% editable entry.name entry.text %}
+                        <div id="entry-{{ entry.pk }}" class="entry{% if entry == new_entry %} active{% endif %}">
+                            <h3>{{ entry.name }}</h3>
+                            <p>{{ entry.text }}</p>
+                        </div>
+                    {% endeditable %}
+                    <hr/>
+                {% endfor %}
+            </section>
+
+            <ul class="pager">
+                {% if entries.has_previous %}
+                    <li class="previous">
+                        <a href="?page={{ entries.previous_page_number }}">&larr; Mais antigos</a>
+                    </li>
+                {% else %}
+                    <li class="previous disabled">
+                        <a href="#">&larr; Mais antigos</a>
+                    </li>
+                {% endif %}
+                <li>Página {{ entries.number }} de {{ entries.paginator.num_pages }}</li>
+                {% if entries.has_next %}
+                    <li class="next">
+                        <a href="?page={{ entries.next_page_number }}">Mais recentes &rarr;</a>
+                    </li>
+                {% else %}
+                    <li class="next disabled">
+                        <a href="#">Mais recentes &rarr;</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+        </div>
+
+        <div class="span6">
+            <div class="well">
+                <h2>Publicar testemunho</h2>
+
+                {% editable page.testimonial.text %}
+                    <div id="testimonial-text">
+                        {{ page.testimonial.text|safe }}
+                    </div>
+                {% endeditable %}
+                <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} id="testimonial-form">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input class="btn btn-inverse" type="submit" value="Salvar">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

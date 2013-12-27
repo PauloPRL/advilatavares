@@ -1,0 +1,19 @@
+{% extends "pages/page.html" %}
+{% load linked_content %}
+
+{% block main %}
+    <div class="row-fluid">
+        <div class="span3">
+            {% linked_content intitucional1 includes/linked_content_white.html %}
+        </div>
+        <div class="span3">
+            {% linked_content intitucional2 includes/linked_content_white.html %}
+        </div>
+        <div class="span3">
+            {% linked_content intitucional3 includes/linked_content_white.html %}
+        </div>
+        <div class="span3">
+            {% linked_content intitucional4 includes/linked_content_white.html %}
+        </div>
+    </div>
+{% endblock %}
