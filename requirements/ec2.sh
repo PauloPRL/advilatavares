@@ -3,9 +3,6 @@ apt-get install python-pip
 apt-get install libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev
 
 echo "Configure VirutalEnvWrapper? [y/n]"
-read n
-y=$(echo $n | tr -s '[:upper:]' '[:lower:]')
-if [[  "$n" = "y"  ]] ; then
   pip install virtualenvwrapper
   echo "export WORKON_HOME=~/Envs
 mkdir -p $WORKON_HOME
