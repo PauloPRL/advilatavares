@@ -13,4 +13,21 @@
 
 {% block main %}
     <h2>Agenda</h2>
+
+    <table id="home-agenda" class="table table-bordered">
+        <tr>
+            {% for day in agenda %}
+                <th>{{ day.date.day }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for day in agenda %}
+                <td>
+                    {% for event in day.events %}
+                        {{ event.title }}
+                    {% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
 {% endblock %}
