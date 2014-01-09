@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 from __future__ import unicode_literals
 from django.db import models
 from mezzanine.core.fields import RichTextField
 from mezzanine.pages.models import Page
+from core.utils.models import AppLabel
 
 
 class LinkedContent(models.Model):
@@ -31,7 +32,8 @@ class LinkedContent(models.Model):
             return "--"
 
     class Meta:
-        verbose_name = 'Conteúdos linkável'
+        verbose_name = 'Conteúdos linkáveis'
+        app_label = AppLabel("linked_content", "The stuff box")
 
     def __unicode__(self):
         return self.key
