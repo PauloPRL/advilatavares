@@ -1,0 +1,16 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags i18n staticfiles %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "less/praybook/style.less" %}" type="text/less"/>
+{% endblock %}
+
+{% block main %}
+    {% editable page.memberpage.text %}
+        <div id="memberpage-page">
+            {{ page.memberpage.text|safe }}
+        </div>
+    {% endeditable %}
+
+    {{ personal_form }}
+{% endblock %}

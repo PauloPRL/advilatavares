@@ -244,7 +244,8 @@ INSTALLED_APPS = (
     "apps.praybook",
     "apps.testimonial",
     "apps.agenda",
-    "apps.home"
+    "apps.home",
+    "apps.members",
     #"mezzanine.twitter",
     #"mezzanine.accounts",
     #"mezzanine.mobile",
