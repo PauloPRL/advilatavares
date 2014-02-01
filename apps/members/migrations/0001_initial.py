@@ -10,7 +10,8 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding model 'MemberPage'
         db.create_table(u'members_memberpage', (
-            (u'richtextpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.RichTextPage'], unique=True, primary_key=True)),
+            (u'page_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.Page'], unique=True, primary_key=True)),
+            ('text', self.gf('mezzanine.core.fields.RichTextField')()),
         ))
         db.send_create_signal(u'members', ['MemberPage'])
 
@@ -105,8 +106,9 @@ class Migration(SchemaMigration):
             'zip_code': ('django.db.models.fields.CharField', [], {'max_length': '8'})
         },
         u'members.memberpage': {
-            'Meta': {'ordering': "('_order',)", 'object_name': 'MemberPage', '_ormbases': [u'pages.RichTextPage']},
-            u'richtextpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.RichTextPage']", 'unique': 'True', 'primary_key': 'True'})
+            'Meta': {'ordering': "('_order',)", 'object_name': 'MemberPage', '_ormbases': [u'pages.Page']},
+            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'}),
+            'text': ('mezzanine.core.fields.RichTextField', [], {})
         },
         u'pages.page': {
             'Meta': {'ordering': "('titles',)", 'object_name': 'Page'},
@@ -132,11 +134,6 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'titles': ('django.db.models.fields.CharField', [], {'max_length': '1000', 'null': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
-        },
-        u'pages.richtextpage': {
-            'Meta': {'ordering': "('_order',)", 'object_name': 'RichTextPage', '_ormbases': [u'pages.Page']},
-            'content': ('mezzanine.core.fields.RichTextField', [], {}),
-            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'sites.site': {
             'Meta': {'ordering': "('domain',)", 'object_name': 'Site', 'db_table': "'django_site'"},

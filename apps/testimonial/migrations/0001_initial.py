@@ -8,27 +8,32 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting model 'MembersPage'
-        db.delete_table(u'members_memberspage')
-
-        # Adding model 'MemberPage'
-        db.create_table(u'members_memberpage', (
+        # Adding model 'Testimonial'
+        db.create_table(u'testimonial_testimonial', (
             (u'page_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.Page'], unique=True, primary_key=True)),
             ('text', self.gf('mezzanine.core.fields.RichTextField')()),
         ))
-        db.send_create_signal(u'members', ['MemberPage'])
+        db.send_create_signal(u'testimonial', ['Testimonial'])
+
+        # Adding model 'TestimonialEntry'
+        db.create_table(u'testimonial_testimonialentry', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True, blank=True)),
+            ('text', self.gf('django.db.models.fields.TextField')()),
+            ('page', self.gf('django.db.models.fields.related.ForeignKey')(related_name='entries', to=orm['testimonial.Testimonial'])),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+        ))
+        db.send_create_signal(u'testimonial', ['TestimonialEntry'])
 
 
     def backwards(self, orm):
-        # Adding model 'MembersPage'
-        db.create_table(u'members_memberspage', (
-            ('text', self.gf('mezzanine.core.fields.RichTextField')()),
-            (u'page_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.Page'], unique=True, primary_key=True)),
-        ))
-        db.send_create_signal(u'members', ['MembersPage'])
+        # Deleting model 'Testimonial'
+        db.delete_table(u'testimonial_testimonial')
 
-        # Deleting model 'MemberPage'
-        db.delete_table(u'members_memberpage')
+        # Deleting model 'TestimonialEntry'
+        db.delete_table(u'testimonial_testimonialentry')
 
 
     models = {
@@ -53,39 +58,6 @@ class Migration(SchemaMigration):
             'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'})
-        },
-        u'members.member': {
-            'Meta': {'object_name': 'Member'},
-            'basic_education': ('django.db.models.fields.CharField', [], {'default': "u'none'", 'max_length': '10'}),
-            'birthday': ('django.db.models.fields.DateField', [], {}),
-            'city': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'college': ('django.db.models.fields.CharField', [], {'default': "u'none'", 'max_length': '10'}),
-            'commercial_phone': ('django.db.models.fields.CharField', [], {'max_length': '14', 'null': 'True', 'blank': 'True'}),
-            'commercial_phone_ramal': ('django.db.models.fields.CharField', [], {'max_length': '7', 'null': 'True', 'blank': 'True'}),
-            'complement': ('django.db.models.fields.CharField', [], {'max_length': "u'20'"}),
-            'cpf': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '11'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
-            'gender': ('django.db.models.fields.CharField', [], {'default': "u'm'", 'max_length': '1'}),
-            'gravatar': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'high_school': ('django.db.models.fields.CharField', [], {'default': "u'none'", 'max_length': '10'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'marital_status': ('django.db.models.fields.CharField', [], {'default': "u'single'", 'max_length': '7'}),
-            'mobile_phone': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
-            'neighborhood': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'number': ('django.db.models.fields.CharField', [], {'max_length': '9'}),
-            'phone': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'profession': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'rebirth': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'rg': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '15'}),
-            'state': ('django.db.models.fields.CharField', [], {'default': "u'SP'", 'max_length': '2'}),
-            'street': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'zip_code': ('django.db.models.fields.CharField', [], {'max_length': '8'})
-        },
-        u'members.memberpage': {
-            'Meta': {'ordering': "('_order',)", 'object_name': 'MemberPage', '_ormbases': [u'pages.Page']},
-            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'}),
-            'text': ('mezzanine.core.fields.RichTextField', [], {})
         },
         u'pages.page': {
             'Meta': {'ordering': "('titles',)", 'object_name': 'Page'},
@@ -117,7 +89,22 @@ class Migration(SchemaMigration):
             'domain': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
+        u'testimonial.testimonial': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'Testimonial', '_ormbases': [u'pages.Page']},
+            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'}),
+            'text': ('mezzanine.core.fields.RichTextField', [], {})
+        },
+        u'testimonial.testimonialentry': {
+            'Meta': {'object_name': 'TestimonialEntry'},
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'page': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'entries'", 'to': u"orm['testimonial.Testimonial']"}),
+            'text': ('django.db.models.fields.TextField', [], {}),
+            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         }
     }
 
-    complete_apps = ['members']
+    complete_apps = ['testimonial']

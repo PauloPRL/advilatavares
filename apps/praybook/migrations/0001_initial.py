@@ -11,28 +11,64 @@ class Migration(SchemaMigration):
         # Adding model 'PrayBook'
         db.create_table(u'praybook_praybook', (
             (u'page_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.Page'], unique=True, primary_key=True)),
+            ('text', self.gf('mezzanine.core.fields.RichTextField')()),
         ))
         db.send_create_signal(u'praybook', ['PrayBook'])
+
+        # Adding model 'Intercessor'
+        db.create_table(u'praybook_intercessor', (
+            (u'page_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.Page'], unique=True, primary_key=True)),
+            ('text', self.gf('mezzanine.core.fields.RichTextField')()),
+        ))
+        db.send_create_signal(u'praybook', ['Intercessor'])
 
         # Adding model 'PrayBookEntry'
         db.create_table(u'praybook_praybookentry', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True, blank=True)),
             ('cause', self.gf('django.db.models.fields.TextField')()),
-            ('created_at', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('updated_at', self.gf('django.db.models.fields.DateField')(auto_now=True, blank=True)),
-            ('page', self.gf('django.db.models.fields.related.ForeignKey')(related_name=u'prayers', to=orm['praybook.PrayBook'])),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('page', self.gf('django.db.models.fields.related.ForeignKey')(related_name=u'entries', to=orm['praybook.PrayBook'])),
         ))
         db.send_create_signal(u'praybook', ['PrayBookEntry'])
+
+        # Adding model 'UserIntercessor'
+        db.create_table(u'praybook_userintercessor', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('status', self.gf('django.db.models.fields.BooleanField')(default=True)),
+        ))
+        db.send_create_signal(u'praybook', ['UserIntercessor'])
+
+        # Adding M2M table for field received_entries on 'UserIntercessor'
+        m2m_table_name = db.shorten_name(u'praybook_userintercessor_received_entries')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('userintercessor', models.ForeignKey(orm[u'praybook.userintercessor'], null=False)),
+            ('praybookentry', models.ForeignKey(orm[u'praybook.praybookentry'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['userintercessor_id', 'praybookentry_id'])
 
 
     def backwards(self, orm):
         # Deleting model 'PrayBook'
         db.delete_table(u'praybook_praybook')
 
+        # Deleting model 'Intercessor'
+        db.delete_table(u'praybook_intercessor')
+
         # Deleting model 'PrayBookEntry'
         db.delete_table(u'praybook_praybookentry')
+
+        # Deleting model 'UserIntercessor'
+        db.delete_table(u'praybook_userintercessor')
+
+        # Removing M2M table for field received_entries on 'UserIntercessor'
+        db.delete_table(db.shorten_name(u'praybook_userintercessor_received_entries'))
 
 
     models = {
@@ -83,19 +119,34 @@ class Migration(SchemaMigration):
             'titles': ('django.db.models.fields.CharField', [], {'max_length': '1000', 'null': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
         },
+        u'praybook.intercessor': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'Intercessor', '_ormbases': [u'pages.Page']},
+            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'}),
+            'text': ('mezzanine.core.fields.RichTextField', [], {})
+        },
         u'praybook.praybook': {
             'Meta': {'ordering': "('_order',)", 'object_name': 'PrayBook', '_ormbases': [u'pages.Page']},
-            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'})
+            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'}),
+            'text': ('mezzanine.core.fields.RichTextField', [], {})
         },
         u'praybook.praybookentry': {
             'Meta': {'object_name': 'PrayBookEntry'},
             'cause': ('django.db.models.fields.TextField', [], {}),
-            'created_at': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'page': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'entries'", 'to': u"orm['praybook.PrayBook']"}),
+            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
+        },
+        u'praybook.userintercessor': {
+            'Meta': {'object_name': 'UserIntercessor'},
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'page': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'prayers'", 'to': u"orm['praybook.PrayBook']"}),
-            'updated_at': ('django.db.models.fields.DateField', [], {'auto_now': 'True', 'blank': 'True'})
+            'received_entries': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['praybook.PrayBookEntry']", 'symmetrical': 'False'}),
+            'status': ('django.db.models.fields.BooleanField', [], {'default': 'True'})
         },
         u'sites.site': {
             'Meta': {'ordering': "('domain',)", 'object_name': 'Site', 'db_table': "'django_site'"},
