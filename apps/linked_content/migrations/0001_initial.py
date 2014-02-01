@@ -11,10 +11,13 @@ class Migration(SchemaMigration):
         # Adding model 'LinkedContent'
         db.create_table(u'linked_content_linkedcontent', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('page', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pages.Page'])),
-            ('button', self.gf('django.db.models.fields.CharField')(max_length=20)),
+            ('key', self.gf('django.db.models.fields.CharField')(unique=True, max_length=16)),
+            ('page', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pages.Page'], null=True, blank=True)),
+            ('_title', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('_description', self.gf('mezzanine.core.fields.RichTextField')(null=True, blank=True)),
+            ('button', self.gf('django.db.models.fields.CharField')(default=u'Clique aqui', max_length=20)),
         ))
-        db.send_create_signal(u'linkedcontent', ['LinkedContent'])
+        db.send_create_signal('linked_content', ['LinkedContent'])
 
 
     def backwards(self, orm):
@@ -45,11 +48,14 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'})
         },
-        u'linkedcontent.linkedcontent': {
+        'linked_content.linkedcontent': {
             'Meta': {'object_name': 'LinkedContent'},
-            'button': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
+            '_description': ('mezzanine.core.fields.RichTextField', [], {'null': 'True', 'blank': 'True'}),
+            '_title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'button': ('django.db.models.fields.CharField', [], {'default': "u'Clique aqui'", 'max_length': '20'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'page': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pages.Page']"})
+            'key': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '16'}),
+            'page': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pages.Page']", 'null': 'True', 'blank': 'True'})
         },
         u'pages.page': {
             'Meta': {'ordering': "('titles',)", 'object_name': 'Page'},
@@ -84,4 +90,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['linkedcontent']
+    complete_apps = ['linked_content']
