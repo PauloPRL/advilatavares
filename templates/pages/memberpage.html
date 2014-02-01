@@ -12,5 +12,28 @@
         </div>
     {% endeditable %}
 
-    {{ personal_form }}
+    {% if created %}
+        <h2>Cadastro realizado com sucesso!</h2>
+        <p>Obrigado por se cadastrar</p>
+    {% else %}
+        <form action="" id="form-members" class="form-horizontal row" method="post">
+
+
+            <div class="span6">
+                <h2>Dados Pessoais</h2>
+                {% fields_for personal_form %}
+                {% fields_for spiritual_form %}
+            </div>
+            <div class="span6">
+                <h2>Endereço</h2>
+                {% fields_for address_form %}
+                <h2>Escolaridade</h2>
+                {% fields_for school_form %}
+
+                <div class="form-actions">
+                    <button class="btn btn-inverse">Salvar</button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
 {% endblock %}

@@ -8,19 +8,13 @@ class MemberPersonalForm(ModelForm):
     class Meta:
         model = Member
         fields = ('name', 'email', 'mobile_phone', 'phone', 'commercial_phone', 'commercial_phone_ramal', 'gender',
-                  'birthday', 'marital_status', 'profession', 'gravatar',)
-
-
-class MemberIdentifiationForm(ModelForm):
-    class Meta:
-        model = Member
-        fields = ('cpf', 'rg',)
+                  'birthday', 'marital_status', 'profession', 'gravatar', 'cpf', 'rg',)
 
 
 class MemberAddressForm(ModelForm):
     class Meta:
         model = Member
-        fields = ('street', 'number', 'complement', 'neighboorhood', 'city', 'state', 'zip_code',)
+        fields = ('street', 'number', 'complement', 'neighborhood', 'city', 'state', 'zip_code',)
 
 
 class MemberSchoolForm(ModelForm):
@@ -33,12 +27,6 @@ class MemberSpiritualForm(ModelForm):
     class Meta:
         model = Member
         fields = ('rebirth',)
-
-
-class MemberAddressForm(ModelForm):
-    class Meta:
-        model = Member
-        fields = ('street', 'number', 'complement', 'neighboorhood', 'city', 'state', 'zip_code')
 
 
 class MemberForm(ModelForm):

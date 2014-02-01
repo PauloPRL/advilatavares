@@ -69,17 +69,17 @@ class Member(models.Model):
     birthday = models.DateField(verbose_name='Nascimento')
     marital_status = models.CharField(verbose_name='Estado civil', choices=MARITAL_STATUS_CHOICES,
                                       default=MARITAL_STATUS_CHOICES[0][0], max_length=7)
-    profession = models.CharField(verbose_name='Profição', max_length=100, null=True, blank=True)
+    profession = models.CharField(verbose_name='Profissão', max_length=100, null=True, blank=True)
     gravatar = models.ImageField(verbose_name='Foto 3x4', null=True, blank=True, upload_to='members')
 
     # Identification DATA
-    cpf = models.CharField(verbose_name='CPF', max_length=11, unique=True)
-    rg = models.CharField(verbose_name='RG', max_length=15, unique=True)
+    cpf = models.CharField(verbose_name='CPF', max_length=14, null=True, blank=True)
+    rg = models.CharField(verbose_name='RG', max_length=15, null=True, blank=True)
 
     # Address Data
-    street = models.CharField(verbose_name='Endereço', max_length=30)
+    street = models.CharField(verbose_name='Logradouro', max_length=30)
     number = models.CharField(verbose_name='Número', max_length=9)
-    complement = models.CharField(verbose_name='Complemento', max_length='20')
+    complement = models.CharField(verbose_name='Complemento', max_length='20', null=True, blank=True)
     neighborhood = models.CharField(verbose_name='Bairro', max_length=30)
     city = models.CharField(verbose_name='Cidade', max_length=30)
     state = models.CharField(verbose_name='Estado', choices=STATE_CHOICES, default='SP', max_length=2)
