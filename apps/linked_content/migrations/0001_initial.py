@@ -17,7 +17,7 @@ class Migration(SchemaMigration):
             ('_description', self.gf('mezzanine.core.fields.RichTextField')(null=True, blank=True)),
             ('button', self.gf('django.db.models.fields.CharField')(default=u'Clique aqui', max_length=20)),
         ))
-        db.send_create_signal('linked_content', ['LinkedContent'])
+        db.send_create_signal(u'linked_content', ['LinkedContent'])
 
 
     def backwards(self, orm):
@@ -48,7 +48,7 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'})
         },
-        'linked_content.linkedcontent': {
+        u'linked_content.linkedcontent': {
             'Meta': {'object_name': 'LinkedContent'},
             '_description': ('mezzanine.core.fields.RichTextField', [], {'null': 'True', 'blank': 'True'}),
             '_title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),

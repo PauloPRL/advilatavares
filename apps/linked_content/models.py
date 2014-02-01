@@ -33,7 +33,6 @@ class LinkedContent(models.Model):
 
     class Meta:
         verbose_name = 'Conteúdos linkáveis'
-        app_label = AppLabel("linked_content", "The stuff box")
 
     def __unicode__(self):
         return self.key
