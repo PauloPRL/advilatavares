@@ -14,5 +14,5 @@ def agenda(request, page):
     date = today + relativedelta(months=month)
 
 
-    return {'events': Event.objects.filter(agenda=page.agenda, date__year=date.year, date__month=date.month),
+    return {'events': Event.objects.filter(agenda=page.agenda, date__year=date.year, date__month=date.month).order_by('date'),
             'date':date, 'month': month}

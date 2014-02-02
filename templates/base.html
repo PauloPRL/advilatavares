@@ -71,49 +71,48 @@
 
         {% block extra_header %}{% endblock %}
 
-
-        {% with slider=page.slider.all.0 %}
-
-            {% if slider %}
-
-                <div class="container">
-                    <div id="top-slider" class="carousel slide" data-ride="carousel">
-
-                        <div class="carousel-inner">
-                            {% for slide in slider.slides.all %}
-                                <div class="item{% if forloop.first %} active{% endif %}">
-                                    {% if slide.url %}
-                                        <a href="{{ slide.url }}">
-                                            <img src="{{ slide.image.url  }}" alt="{{ slide.title }}">
-                                        </a>
-                                    {% else %}
-                                        <img src="{{ slide.image.url  }}" alt="{{ slide.title }}">
-                                    {% endif %}
-                                    {% if slide.title or slide.description %}
-                                        <div class="carousel-caption">
-                                            <h3>{{ slide.title }}</h3>
-                                            <p>{{ slide.description }}</p>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#top-slider" data-slide="prev">
-                            <small><</small>
-                        </a>
-                        <a class="right carousel-control" href="#top-slider" data-slide="next">
-                            <small>></small>
-                        </a>
-
-                    </div>
-                </div>
-
-            {% endif %}
-
-        {% endwith %}
     </header>
+    {% with slider=page.slider.all.0 %}
+
+        {% if slider %}
+
+            <div class="container">
+                <div id="top-slider" class="carousel slide" data-ride="carousel">
+
+                    <div class="carousel-inner">
+                        {% for slide in slider.slides.all %}
+                            <div class="item{% if forloop.first %} active{% endif %}">
+                                {% if slide.url %}
+                                    <a href="{{ slide.url }}">
+                                        <img src="{{ slide.image.url  }}" alt="{{ slide.title }}">
+                                    </a>
+                                {% else %}
+                                    <img src="{{ slide.image.url  }}" alt="{{ slide.title }}">
+                                {% endif %}
+                                {% if slide.title or slide.description %}
+                                    <div class="carousel-caption">
+                                        <h3>{{ slide.title }}</h3>
+                                        <p>{{ slide.description }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#top-slider" data-slide="prev">
+                        <small><</small>
+                    </a>
+                    <a class="right carousel-control" href="#top-slider" data-slide="next">
+                        <small>></small>
+                    </a>
+
+                </div>
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
 {% endblock %}
 
 {% block top_container %}
