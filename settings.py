@@ -212,7 +212,7 @@ MEDIA_URL = STATIC_URL + "media/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, *MEDIA_URL.strip("/").split("/"))
 
 # Package/module name to import the root urlpatterns from for the project.
-ROOT_URLCONF = "%s.urls" % PROJECT_DIRNAME
+ROOT_URLCONF = "urls"
 
 # Put strings here, like "/home/html/django_templates"
 # or "C:/www/django/templates".
@@ -339,13 +339,79 @@ DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
 # }
 
 # Allowed Hosts
-ALLOWED_HOSTS = ('localhost',)
+ALLOWED_HOSTS = ('localhost','162.243.238.42','igrejaadvt.com.br', 'advilatavares.com.br',)
 
 COMPRESS_ENABLED = True
 
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
+
+def create_logfile(filename, handler_class='logging.handlers.RotatingFileHandler', level='DEBUG',
+                   formatter='verysimple', mode='a', max_bytes=10485760, backup_count=50):
+    return {
+        'filename': filename,
+        'class': handler_class,
+        'level': level,
+        'formatter': formatter,
+        'mode': mode,
+        'maxBytes': max_bytes,
+        'backupCount': backup_count,
+    }
+
+LOG_DIR = os.path.join(PROJECT_ROOT, 'logs')
+
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error when DEBUG=False.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)-15s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(asctime)-15s %(levelname)s %(message)s [%(pathname)s:%(lineno)d %(funcName)s]'
+        },
+        'verysimple': {
+            'format': '%(asctime)-15s %(levelname)s %(message)s'
+        }
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'logfile': create_logfile(os.path.join(LOG_DIR, 'logfile.log')),
+        'logfile_akatus': create_logfile(os.path.join(LOG_DIR, 'logfile-akatus.log')),
+        'logfile_mindbody': create_logfile(os.path.join(LOG_DIR, 'logfile-mindbody.log')),
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins', 'logfile'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'apps': {
+            'handlers': ['console', 'logfile', 'mail_admins'],
+            'level': 'INFO'
+        }, 
+    },
+}
 
 ##################
 # LOCAL SETTINGS #
