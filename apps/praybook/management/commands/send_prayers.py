@@ -13,5 +13,5 @@ class Command(BaseCommand):
 
         for pray in prayers:
             for intercessor in intercessors:
-                if not pray.interceded_by.filter(pray=pray).exists():
+                if not pray.interceded_by.filter(id=intercessor.id).exists():
                     print 'O pedido %s não foi recebido pelo usuário %s' % (pray, intercessor)
