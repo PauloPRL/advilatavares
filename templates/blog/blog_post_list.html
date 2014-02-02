@@ -79,9 +79,8 @@
                     </div>
                     <hr/>
                     <div class="row-fluid">
-                        <div class="span4">
-
-                            {% for blog_post in blog_posts.object_list %}
+                        {% for blog_post in blog_posts.object_list %}
+                            <div class="span4">
                                 {% block blog_post_list_post_title %}
                                     {% editable blog_post.title %}
                                         <h2>
@@ -151,9 +150,9 @@
                                     </p>
                                 {% endblock %}
                             </div>
-                        </div>
-                        <hr/>
-                    {% endfor %}
+                            <hr/>
+                        {% endfor %}
+                    </div>
 
                     {% pagination_for blog_posts %}
 
