@@ -91,13 +91,13 @@
                                 {% endblock %}
                                 {% block blog_post_list_post_metainfo %}
                                     {% editable blog_post.publish_date %}
-                                        <h6>
+                                        <div>
                                             {% trans "Posted by" %}:
                                             {% with blog_post.user as author %}
                                                 <a href="{% url "blog_post_list_author" author %}">{{ author.get_full_name|default:author.username }}</a>
                                             {% endwith %}
-                                        </h6>
-                                        <h6>
+                                        </div>
+                                        <div>
                                             {% with blog_post.categories.all as categories %}
                                                 {% if categories %}
                                                     {% trans "in" %}
@@ -106,10 +106,11 @@
                                                     {% endfor %}
                                                 {% endif %}
                                             {% endwith %}
-                                        </h6>
-                                        <h6>
+                                        </div>
+                                        <div>
                                             {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}
-                                        </h6>
+                                        </div>
+
                                     {% endeditable %}
                                 {% endblock %}
 
