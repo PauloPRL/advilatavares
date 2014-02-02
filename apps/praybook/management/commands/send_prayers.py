@@ -22,4 +22,5 @@ class Command(BaseCommand):
 %s''' % (pray.name, pray.cause)
                         send_mail('Novo pedido de oração', message, 'no-reply@advilatavares.com.br',
                                   [intercessor.email])
+                        pray.interceded_by.add(intercessor)
                         sleep(1)
