@@ -34,6 +34,12 @@ $(function(){
         }
 
         return true;
-    })
+    });
+
+    $(document).ready(function() {
+        $('.carousel').carousel({
+            interval: 3000
+        })
+    });
 
 });
