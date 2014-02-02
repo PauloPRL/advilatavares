@@ -249,6 +249,7 @@ INSTALLED_APPS = (
     "apps.agenda",
     "apps.home",
     "apps.members",
+    "apps.slider",
     #"mezzanine.twitter",
     #"mezzanine.accounts",
     #"mezzanine.mobile",
