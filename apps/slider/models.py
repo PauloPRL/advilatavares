@@ -21,3 +21,4 @@ class Slide(Orderable):
     image = ImageField(upload_to='slides', verbose_name='Imagem')
     time = PositiveIntegerField(default=5, verbose_name='Tempo visível', help_text='Em segundos')
     slider = ForeignKey(Slider, related_name='slides')
+    url = CharField(verbose_name='Link', max_length=255, null=True, blank=True)
