@@ -119,7 +119,7 @@
                                 {% endif %}
 
                                 {% block blog_post_list_post_content %}
-                                    {% editable blog_post.content %}
+                                    {% editable blog_post.meta.description %}
                                         {{ blog_post.meta.description }}
                                     {% endeditable %}
                                 {% endblock %}
