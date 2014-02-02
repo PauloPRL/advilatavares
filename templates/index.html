@@ -10,8 +10,8 @@
     <div class="row-fluid">
         <div class="span6">
             <h2>Últimos Posts</h2>
-            posts {{ blogposts }}
-            {% for post in blogposts %}
+            posts {{ blog_posts }}
+            {% for post in blog_posts %}
                 <section>
                     <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
                     <h4>
