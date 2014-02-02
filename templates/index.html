@@ -10,7 +10,6 @@
     <div class="row-fluid">
         <div class="span6">
             <h2>Últimos Posts</h2>
-            posts {{ blog_posts }}
             {% for post in blog_posts %}
                 <section>
                     <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
@@ -24,6 +23,9 @@
                     <hr/>
                 </section>
             {% endfor %}
+        </div>
+        <div class="span6">
+            <div class="fb-like-box" data-href="https://www.facebook.com/ieadvt" data-width="570" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="true"></div>
         </div>
     </div>
 {% endblock %}
