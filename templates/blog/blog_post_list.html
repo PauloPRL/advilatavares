@@ -96,6 +96,8 @@
                                             {% with blog_post.user as author %}
                                                 <a href="{% url "blog_post_list_author" author %}">{{ author.get_full_name|default:author.username }}</a>
                                             {% endwith %}
+                                        </h6>
+                                        <h6>
                                             {% with blog_post.categories.all as categories %}
                                                 {% if categories %}
                                                     {% trans "in" %}
@@ -104,6 +106,8 @@
                                                     {% endfor %}
                                                 {% endif %}
                                             {% endwith %}
+                                        </h6>
+                                        <h6>
                                             {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}
                                         </h6>
                                     {% endeditable %}
