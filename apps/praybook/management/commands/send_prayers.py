@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from apps.praybook.models import PrayBookEntry, UserIntercessor
+from django.core.mail import send_mail
 
 
 class Command(BaseCommand):
@@ -15,4 +16,8 @@ class Command(BaseCommand):
             for intercessor in intercessors:
                 if pray.created_at > intercessor.created_at:
                     if not pray.interceded_by.filter(id=intercessor.id).exists():
-                        print 'O pedido %s não foi recebido pelo usuário %s' % (pray, intercessor)
+                        message = '''%s
+
+%s''' % (pray.name, pray.cause)
+                        send_mail('Novo pedido de oração', message, 'no-reply@advilatavares.com.br',
+                                  [intercessor.email])
