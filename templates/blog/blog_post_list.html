@@ -111,8 +111,9 @@
                                     {% endeditable %}
                                 {% endblock %}
 
-                                {% block blog_post_list_post_links %}
-                                    <p class="blog-list-detail">
+                                <p class="blog-list-detail">
+                                    {% block blog_post_list_post_links %}
+
                                         {% keywords_for blog_post as tags %}
                                         {% if tags %}
                                             {% trans "Tags" %}:
@@ -135,12 +136,10 @@
                                                 {% blocktrans count comments_count=blog_post.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
                                             </a>
                                         {% endif %}
-                                    </p>
-                                {% endblock %}
-                                {% block blog_post_list_post_metainfo %}
-                                    {% editable blog_post.publish_date %}
 
-                                        <div>
+                                    {% endblock %}
+                                    {% block blog_post_list_post_metainfo %}
+                                        {% editable blog_post.publish_date %}
                                             {% with blog_post.categories.all as categories %}
                                                 {% if categories %}
                                                     {% trans "in" %}
@@ -150,10 +149,9 @@
                                                 {% endif %}
                                             {% endwith %}
                                             {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}
-                                        </div>
-
-                                    {% endeditable %}
-                                {% endblock %}
+                                        {% endeditable %}
+                                    {% endblock %}
+                                </p>
                             </div>
                             <hr/>
                         </div>
