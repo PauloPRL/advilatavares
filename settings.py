@@ -339,7 +339,7 @@ DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
 # }
 
 # Allowed Hosts
-ALLOWED_HOSTS = ('localhost','162.243.238.42','igrejaadvt.com.br', 'advilatavares.com.br',)
+ALLOWED_HOSTS = ('localhost', '162.243.238.42', 'igrejaadvt.com.br',  'www.igrejaadvt.com.br',  'advilatavares.com.br',)
 
 COMPRESS_ENABLED = True
 
