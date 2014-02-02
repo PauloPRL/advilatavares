@@ -12,22 +12,23 @@
 {% block breadcrumb %}{% endblock %}
 
 {% block main %}
-{#    <h2>Agenda</h2>#}
-{##}
-{#    <table id="home-agenda" class="table table-bordered">#}
-{#        <tr>#}
-{#            {% for day in agenda %}#}
-{#                <th>{{ day.date.day }}</th>#}
-{#            {% endfor %}#}
-{#        </tr>#}
-{#        <tr>#}
-{#            {% for day in agenda %}#}
-{#                <td>#}
-{#                    {% for event in day.events %}#}
-{#                        {{ event.title }}#}
-{#                    {% endfor %}#}
-{#                </td>#}
-{#            {% endfor %}#}
-{#        </tr>#}
-{#    </table>#}
+    <div class="row-fluid">
+        <div class="span6">
+            <h2>Últimos Posts</h2>
+
+            {% for post in posts %}
+                <section>
+                    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <h4>
+                        Postado por
+                        <a href="{% url "blog_post_list_author" author %}">
+                            {{ post.user.get_full_name|default:author.username }}
+                        </a>
+                    </h4>
+                    <p>{{ post.description }}</p>
+                    <hr/>
+                </section>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
