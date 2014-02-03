@@ -1,6 +1,5 @@
 # coding: utf-8
 from __future__ import unicode_literals
-from optparse import make_option
 from time import sleep
 from django.core.management.base import BaseCommand, CommandError
 from apps.praybook.models import PrayBookEntry, UserIntercessor
@@ -10,7 +9,7 @@ from django.core.mail import send_mail
 class Command(BaseCommand):
     def handle(self, **options):
 
-        prayers = PrayBookEntry.objects.all()[0:10]
+        prayers = PrayBookEntry.objects.all().order_by('-pk')[0:10]
         intercessors = UserIntercessor.objects.all()
 
         for pray in prayers:
