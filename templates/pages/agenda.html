@@ -1,0 +1,59 @@
+{% extends "pages/page.html" %}
+
+{% load mezzanine_tags i18n %}
+
+
+{% block main %}
+    <ul class="pager">
+        <li class="previous">
+            <a href="?month={{ month|add:-1 }}">← Anterior</a>
+        </li>
+        <li><strong>{{ date|date:'F Y' }}</strong></li>
+        <li class="next">
+            <a href="?month={{ month|add:1 }}">Próxima →</a>
+        </li>
+    </ul>
+
+    <div class="accordion" id="accordion-agenda">
+        {% if events %}
+            {% for event in events %}
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-agenda" href="#collapse-{{ event.id }}">
+                            {{ event.date }} - {{ event.title }}
+                        </a>
+                    </div>
+                    <div id="collapse-{{ event.id }}" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            {{ event.description|safe }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+
+            <p>Ainda não temos nada programado para esse mês :(</p>
+        {% endif %}
+    </div>
+
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span4">
+                <strong>Domingo</strong>
+                <hr/>
+                <p><strong>08:30</strong> - Escola Bíblica Dominical</p>
+                <p><strong>18:30</strong> - Culto da Família</p>
+            </div>
+            <div class="span4">
+                <strong>Terça-Feira</strong>
+                <hr/>
+                <p><strong>19:30</strong> - Culto de Ensino</p>
+            </div>
+            <div class="span4">
+                <strong>Quinta-Feira</strong>
+                <hr/>
+                <p><strong>19:30</strong> - Culto de Louvor</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -45,90 +45,139 @@
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
-    {% block header %}
-        <header id="header-top">
-            <div class="container" id="header-logo-container">
-                <div class="row-fluid">
-                    <div class="span3">
-                        <a id="logo-link" href="{% url "home" %}">
-                            <img src="{% static "img/logo.png" %}" alt="ADVT"/>
-                        </a>
-                    </div>
-                    <div id="header-info" class="span9 hidden-phone">
-                        <h1>{{ settings.SITE_TITLE }}</h1>
-                        <p>Rua: São Caetano, 127 - Vila Tavares - Mauá - SP - Tel.:3421-5024</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="navbar navbar-static-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        {% page_menu "pages/menus/dropdown.html" %}
-                    </div>
-                </div>
-            </div>
-
-            {% block extra_header %}{% endblock %}
-        </header>
-    {% endblock %}
-
-    {% block top_container %}
-        <div class="container">
-
-            {% nevercache %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}" data-alert="alert">
-                        <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
-                    </div>
-                {% endfor %}
-            {% endnevercache %}
-
-
-            <h1>{% block title %}{% endblock %}</h1>
-
-            {% block breadcrumb %}
-                <ul class="breadcrumb">
-                    {% spaceless %}
-                        {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
-                    {% endspaceless %}
-                </ul>
-            {% endblock %}
-
-        </div>
-    {% endblock %}
-
-    {% block main_container %}
-        <div class="container">
-            {% block main %}{% endblock %}
-        </div>
-    {% endblock %}
-
-    <section id="bluebar">
-        <div class="container">
+{% block header %}
+    <header id="header-top">
+        <div class="container" id="header-logo-container">
             <div class="row-fluid">
-                <div class="span4">
-                    {% linked_content bluecontent1 %}
+                <div class="span3">
+                    <a id="logo-link" href="{% url "home" %}">
+                        <img src="{% static "img/logo.png" %}" alt="ADVT"/>
+                    </a>
                 </div>
-                <div class="span4">
-                    {% linked_content bluecontent2 %}
-                </div>
-                <div class="span4">
-                    {% linked_content bluecontent3 %}
+                <div id="header-info" class="span9 hidden-phone">
+                    <h1>{{ settings.SITE_TITLE }}</h1>
+                    <p>Rua: São Caetano, 127 - Vila Tavares - Mauá - SP - Tel.: 3421-5024</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <footer>
-        <div class="container">
-            Rua: São Caetano, 127 - Vila Tavares - Mauá - SP - Tel.:3421-5024
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    {% page_menu "pages/menus/dropdown.html" %}
+                </div>
+            </div>
         </div>
-    </footer>
 
-    {% include "includes/footer_scripts.html" %}
-    <script src="{% static 'js/jquery.maskedinput.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+        {% block extra_header %}{% endblock %}
 
+    </header>
+    {% with slider=page.slider.all.0 %}
+
+        {% if slider %}
+
+            <div class="container">
+                <div id="top-slider" class="carousel slide in" data-ride="carousel">
+
+                    <div class="carousel-inner">
+                        {% for slide in slider.slides.all %}
+                            <div class="item{% if forloop.first %} active{% endif %}">
+                                {% if slide.url %}
+                                    <a href="{{ slide.url }}">
+                                        <img src="{{ slide.image.url  }}" alt="{{ slide.title }}">
+                                    </a>
+                                {% else %}
+                                    <img src="{{ slide.image.url  }}" alt="{{ slide.title }}">
+                                {% endif %}
+                                {% if slide.title or slide.description %}
+                                    <div class="carousel-caption">
+                                        <h3>{{ slide.title }}</h3>
+                                        <p>{{ slide.description }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#top-slider" data-slide="prev">
+                        <small><</small>
+                    </a>
+                    <a class="right carousel-control" href="#top-slider" data-slide="next">
+                        <small>></small>
+                    </a>
+
+                </div>
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+{% endblock %}
+
+{% block top_container %}
+    <div class="container">
+
+        {% nevercache %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" data-alert="alert">
+                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
+                </div>
+            {% endfor %}
+        {% endnevercache %}
+
+
+        <h1>{% block title %}{% endblock %}</h1>
+
+        {% block breadcrumb %}
+            <ul class="breadcrumb">
+                {% spaceless %}
+                    {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+                {% endspaceless %}
+            </ul>
+        {% endblock %}
+
+    </div>
+{% endblock %}
+
+{% block main_container %}
+    <div class="container">
+        {% block main %}{% endblock %}
+    </div>
+{% endblock %}
+
+<section id="bluebar">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span4">
+                {% linked_content bluecontent1 %}
+            </div>
+            <div class="span4">
+                {% linked_content bluecontent2 %}
+            </div>
+            <div class="span4">
+                {% linked_content bluecontent3 %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        Rua: São Caetano, 127 - Vila Tavares - Mauá - SP - Tel.: 3421-5024
+    </div>
+</footer>
+
+{% include "includes/footer_scripts.html" %}
+<script src="{% static 'js/jquery.maskedinput.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=379676282132311";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>

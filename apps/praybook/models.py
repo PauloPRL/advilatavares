@@ -48,7 +48,8 @@ class UserIntercessor(models.Model):
     """
     name = models.CharField(max_length=100, verbose_name='Nome')
     email = models.EmailField(verbose_name='E-mail')
-    received_entries = models.ManyToManyField(PrayBookEntry, verbose_name='Pedidos Recebidos')
+    received_entries = models.ManyToManyField(PrayBookEntry, verbose_name='Pedidos Recebidos',
+                                              related_name='interceded_by')
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=True)
 

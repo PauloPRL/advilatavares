@@ -34,6 +34,10 @@ $(function(){
         }
 
         return true;
-    })
+    });
+
+    $('.carousel').carousel({
+        interval: 5000
+    });
 
 });

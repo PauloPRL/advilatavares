@@ -15,13 +15,13 @@ def members_page_form(request, page):
 
         valid = True
         for form in forms:
-            forms[form] = forms[form](request.POST)
+            forms[form] = forms[form](request.POST, request.FILES)
 
             if not forms[form].is_valid():
                 valid = False
 
         if valid:
-            form = MemberForm(request.POST)
+            form = MemberForm(request.POST, request.FILES)
             form.save()
 
             forms['created'] = True
