@@ -68,7 +68,7 @@ class Member(models.Model):
     gender = models.CharField(verbose_name='Sexo', choices=GENDER_CHOICE, default=GENDER_CHOICE[0][0], max_length=1)
     birthday = models.DateField(verbose_name='Nascimento')
     marital_status = models.CharField(verbose_name='Estado civil', choices=MARITAL_STATUS_CHOICES,
-                                      default=MARITAL_STATUS_CHOICES[0][0], max_length=7)
+                                      default=MARITAL_STATUS_CHOICES[0][0], max_length=8)
     profession = models.CharField(verbose_name='Profissão', max_length=100, null=True, blank=True)
     gravatar = models.ImageField(verbose_name='Foto 3x4', null=True, blank=True, upload_to='members')
 
