@@ -95,3 +95,6 @@ class Member(models.Model):
 
     # Spiritual
     rebirth = models.BooleanField(verbose_name='É Batizado nas águas?')
+
+    def __unicode__(self):
+        return '[' + self.cpf + '] ' + self.name
