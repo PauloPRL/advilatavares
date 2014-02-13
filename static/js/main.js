@@ -2,7 +2,7 @@
  * Created by carlos on 01/02/14.
  */
 $(function(){
-    $('#id_mobile_phone').mask('(99) 99999-9999');
+    $('#id_mobile_phone').mask('(99) 99999-9999?');
 
     $('#id_phone, #id_commercial_phone').mask('(99) 9999-9999');
 
