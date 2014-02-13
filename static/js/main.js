@@ -4,6 +4,7 @@
 $(function(){
     $('#id_mobile_phone').mask('(99) 99999-9999?');
 
+
     $('#id_phone, #id_commercial_phone').mask('(99) 9999-9999');
 
     $('#id_birthday').mask('99/99/9999');
