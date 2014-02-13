@@ -39,5 +39,6 @@ $(function(){
     $('.carousel').carousel({
         interval: 5000
     });
-
+	$.mask.load = function(){};
+	$.mask.close = function(){}
 });
