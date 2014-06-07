@@ -3,6 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from mezzanine.core.views import direct_to_template
+from apps.members.views import PrintMemberView
 
 
 admin.autodiscover()
@@ -28,6 +29,8 @@ urlpatterns = patterns("",
     # one out.
 
     url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+
+    url(r'^membro/(?P<pk>\d+)$', PrintMemberView.as_view(), name='print_member'),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

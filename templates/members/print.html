@@ -1,0 +1,142 @@
+{% load compress staticfiles %}
+<html>
+<head>
+    <title>Ficha de Cadastro</title>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "less/bootstrap/bootstrap.less" %}" type="text/less">
+        <link rel="stylesheet" href="{% static "less/main/style.less" %}" type="text/less">
+
+        <style>
+            h1, h2, h3, h4, h5, h6{
+                font-weight: bold;
+                padding: 0;
+                margin: 0;
+            }
+            td{ white-space: nowrap; font-size: 12px; padding: 0 }
+            p{
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+    {% endcompress %}
+</head>
+<body>
+<table style="width:20cm; margin: 0 0.5cm" border='1' class="table table-bordered">
+    <tr>
+        <td><img src="http://www.igrejaadvt.com.br/static/img/logo.png"></td>
+        <td>
+            <h2>Assembleia de Deus <br>de Vila Tavares</h2>
+            Rua: São Caetano, 127 - Vila Tavares <br>Mauá - SP - Tel.: 3421-5024
+        </td>
+        <td>
+            {% if object.gravatar %}
+                <img src="{{ object.gravatar.url }}" class="img-reponsive">
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <h3 style="text-align: center">Ficha de Cadastro de Membros</h3>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <h4>Dados pessoais</h4>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p><strong>Nome:</strong> {{ object.name }}</p>
+        </td>
+        <td>
+            <p><strong>Sexo:</strong> {{ object.get_gender_display }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>Estado Civil:</strong> {{ object.get_marital_status_display }}</p>
+        </td>
+        <td>
+            <p><strong>Data de nascimento:</strong> {{ object.birthday }}</p>
+        </td>
+        <td>
+            <p><strong>Profiss&atilde;o:</strong> {{ object.profession }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><p><strong>CPF:</strong> {{ object.cpf }}</p></td>
+        <td><p><strong>RG:</strong> {{ object.rg }}</p></td>
+    </tr>
+    <tr>
+        <td colspan="3"><p><strong>Batizado nas &aacute;guas:</strong> Sim</p></td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>Ensino fundamental:</strong> {{ object.get_basic_education_display }}</p>
+        </td>
+        <td>
+            <p><strong>Ensino m&eacute;dio:</strong> {{ object.get_high_school_display }}</p>
+        </td>
+        <td>
+            <p><strong>Ensino superior:</strong> {{ object.get_college_display }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <h3>Contato:</h3>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p><strong>Telefone fixo:</strong> {{ object.phone }}</p>
+        </td>
+        <td>
+            <p><strong>Celular:</strong> {{ object.mobile_phone }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>Telefone comercial:</strong> {{ object.commercial_phone }}</p>
+        </td>
+        <td>
+            <p><strong>Ramal:</strong> {{ object.commercial_phone_ramal }}</p>
+        </td>
+        <td>
+            <p><strong>Email:</strong> {{ object.email }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <h3>Endere&ccedil;o</h3>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p><strong>Logradouro:</strong> {{ object.street }}</p>
+        </td>
+        <td>
+            <p><strong>N&uacute;mero:</strong> {{ object.number }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>Bairro:</strong> {{ object.neighborhood }}</p>
+        </td>
+        <td>
+            <p><strong>Cidade:</strong> {{ object.city }}</p>
+        </td>
+        <td>
+            <p><strong>Estado:</strong> {{ object.get_state_display }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p><strong>Cep:</strong> {{ object.zip_code }}</p>
+        </td>
+        <td>
+            <p><strong>Complemento:</strong> {{ object.complement }}</p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
