@@ -17,6 +17,9 @@
                 padding: 0;
                 margin: 0;
             }
+            .gravatar{
+                max-width: 130px;
+            }
         </style>
     {% endcompress %}
 </head>
@@ -30,7 +33,7 @@
         </td>
         <td>
             {% if object.gravatar %}
-                <img src="{{ object.gravatar.url }}" class="img-reponsive">
+                <img src="{{ object.gravatar.url }}" class="gravatar">
             {% endif %}
         </td>
     </tr>
