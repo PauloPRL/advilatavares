@@ -12,7 +12,7 @@ class MembersPageAdmin(PageAdmin):
 
 
 class MembersAdmin(admin.ModelAdmin):
-    list_display = ['cpf', 'name', 'email', 'phone', 'print_list']
+    list_display = ['name', 'cpf', 'email', 'phone', 'print_list']
     search_fields = ['name', 'cpf']
 
     def print_list(self, obj):
